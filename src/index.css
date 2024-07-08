@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@keyframes circlingBorder {
+    0% { border-color: #007bff; } /* Blue */
+    17% { border-color: #dc3545; } /* Red */
+    34% { border-color: #6c757d; } /* Gray */
+    51% { border-color: #28a745; } /* Green */
+    68% { border-color: #ffc107; } /* Yellow */
+    85% { border-color: #17a2b8; } /* Teal */
+    100% { border-color: #007bff; } /* Back to Blue */
+  }
+  @keyframes circlingBorderForm {
+    0% { border-color: #ec4899; }  
+    100% { border-color: #eab308 ; }
+  }
+  
+
+  .navbarCirclingBorder {
+    animation: circlingBorder 10s infinite linear;
+  }
+
+.formBorder{
+    animation: circlingBorderForm 10s infinite linear;
+}
