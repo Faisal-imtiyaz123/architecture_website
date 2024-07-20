@@ -7,17 +7,17 @@ import { sanityClient } from '../utils/client';
 import { urlForImage } from '../utils/image';
 import { useState } from 'react';
 
+export const settings = {
+ dots: true,
+ infinite: true,
+ speed: 2000,
+ slidesToShow: 1,
+ slidesToScroll: 1,
+ autoplay: true,
+ autoplaySpeed: 3000, 
+ cssEase: 'ease-in-out' 
+};
 const Carousel = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 5000, 
-    cssEase: 'ease-in-out' 
-  };
   const carouselImages = useQuery({
     queryKey: ['carouselImages'],
     queryFn: async () => {
@@ -30,7 +30,6 @@ const Carousel = () => {
       }
   })
  const [hovered,setHovered] = useState<boolean>(false)
- console.log(carouselImages.data)
   return (
     <div>
       <Slider {...settings}>

@@ -15,6 +15,8 @@ import {
   QueryClientProvider,
 
 } from '@tanstack/react-query'
+import Sector from "./routes/Sector";
+import SectorProject from "./routes/SectorProject";
 export default function App() {
   const queryclient = new QueryClient();
   return (
@@ -26,7 +28,10 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="/architecture" element={<Architecture />} />
         <Route path="/interiors" element={<Interiors />} />
-        <Route path="/sectors" element={<Sectors />} />
+        <Route path="/sectors" element={<Sectors />} >
+        <Route path=":sector" element={<Sector />} />
+        </Route>
+        <Route path="/sectors/:sector/:id" element={<SectorProject />} />
         <Route path="/about" element={<About />} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/publication" element={<Publication />} />

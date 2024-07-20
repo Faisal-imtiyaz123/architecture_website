@@ -1,20 +1,25 @@
 "use client"
-import { useState } from "react";
-import {  Navbar as NavbarNextUI,  NavbarContent,   NavbarItem,   NavbarMenuToggle,  NavbarMenu,  NavbarMenuItem} from "@nextui-org/navbar";
+import { useEffect, useRef, useState } from "react";
+import {  Navbar as NavbarNextUI,  NavbarContent,   NavbarItem,NavbarBrand,    NavbarMenu,  NavbarMenuItem} from "@nextui-org/navbar";
 import {Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/react"
-import {Link} from "react-router-dom";
-import { Plane, Building, Gavel, Briefcase, Train, HeartPulse, Instagram, Linkedin, Mail } from 'lucide-react';
+import {Link, useNavigate} from "react-router-dom";
+import { Plane, Building, Gavel, Briefcase, Train, HeartPulse, Instagram, Linkedin, Mail, Home, Palette } from 'lucide-react';
 
 export default function Navbar() {
 const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+const [clicked,setClicked] = useState<boolean>(true)
+const navigate = useNavigate()
 const [activeLink,setActiveLink]  = useState<number>(0)
+const [showArchitectureDropdown,setArchitectureDropdown] = useState<boolean>(false)
+// const [triggerClicked, setTriggerClicked] = useState<boolean>(false)
+const ref = useRef<HTMLDivElement| null>(null)
 const icons = {
     chevron: <ChevronDown fill="currentColor" size={16} />
   };
 
  const navLinks =[
     {
-     name:'Our Projects',
+     name:'Projects',
      url:'/sectors',
      dropdown:true
     },
@@ -34,7 +39,13 @@ const icons = {
 
  
 const size = 20;
+const mainDropdown=[
+  {label: "Interiors", icon: <Home size={size} color="#ff6f61" /> },
+  {label:"Architecture", icon: <Palette size={size} color="#ff6f61" />}
+
+]
 const sectorDropDown = [
+
   { label: "Airports", icon: <Plane size={size} color="#007bff" /> }, // Blue
   { label: "Health Care", icon: <HeartPulse size={size} color="#dc3545" /> }, // Red
   { label: "Institutional", icon: <Building size={size} color="#6c757d" /> }, // Gray
@@ -44,16 +55,19 @@ const sectorDropDown = [
 ];
 const iconClassName = "hover:scale-110 cursor-pointer transition duration-200"
 const isLinkActive=(i:number)=> activeLink-1===i
-const activeLinkStyle = "bg-gradient-to-tr from-pink-600 to-yellow-400 text-white rounded-2xl p-2"
+const activeLinkStyle = "bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-2xl p-2"
+console.log(clicked)
+
+
   return (
-  <div className="fixed top-2 flex w-[100vw] z-[100] justify-center">
-    <NavbarNextUI className="flex border justify-center shadow-lg  rounded-3xl w-[43rem]"  onMenuOpenChange={setIsMenuOpen} >
-      {/* <NavbarContent>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="md:hidden"
-        />
-      </NavbarContent> */}
+  <div className="fixed top-2 items-center justify-center flex w-[100vw] z-[100] ">
+    <NavbarNextUI className="flex border gap-8 shadow-lg  rounded-3xl max-w-[59vw]"  onMenuOpenChange={setIsMenuOpen} >
+    <NavbarContent  justify="center">
+        <NavbarBrand>
+          <p onClick={()=>{setActiveLink(0)
+            navigate('/')}} className="text-3xl hover:scale-110 bg-gradient-to-r bg-clip-text text-transparent transition duration-200 cursor-pointer font-bold from-blue-600 to-blue-400 tracking-widest ">ENARCH</p>
+        </NavbarBrand>
+    </NavbarContent>
         <NavbarContent className="flex">
         {
             navLinks.map((navLink,i)=> {
@@ -61,11 +75,10 @@ const activeLinkStyle = "bg-gradient-to-tr from-pink-600 to-yellow-400 text-whit
             navLink.dropdown?
         <Dropdown>
           <NavbarItem  key={i}>
-            <DropdownTrigger>
+            <DropdownTrigger  onClick={()=>{setClicked(true) }}>
               <Button
-                onClick={()=>setActiveLink(i+1)} 
                 disableRipple
-                className={`hover:scale-110 text-sm  bg-transparent data-[hover=true]:bg-transparent ${isLinkActive(i) ? activeLinkStyle:" text-gray-600"}`}
+                className={`hover:scale-110 text-sm  bg-transparent data-[hover=true]:bg-transparent `}
                 radius="none"
                 endContent={icons.chevron}
               >
@@ -73,17 +86,37 @@ const activeLinkStyle = "bg-gradient-to-tr from-pink-600 to-yellow-400 text-whit
               </Button>
             </DropdownTrigger>
           </NavbarItem>
-          <DropdownMenu
-            className=""
+        { <DropdownMenu
           >
-            {sectorDropDown.map((link,index)=>
-            <DropdownItem startContent={link.icon} color="danger" variant="light" key={index}>
-                <Link className="p-3  " to={`/sectors/${link.label.toLowerCase().replace(/\s/g, "")}`}>
+            { mainDropdown.map((link,index)=>
+            <DropdownItem startContent={link.icon} color="primary" variant="light" key={index}>
+                { 
+                  link.label==="Architecture"?
+                  <div ref={ref} onMouseEnter={()=>setArchitectureDropdown(true)} className="px-3 flex items-center gap-2 p-2">
+                    {link.label}
+                    {icons.chevron}
+                    {showArchitectureDropdown && 
+                      <div className="absolute top-[3.8rem] px-2 p-1 rounded-xl flex flex-col bg-white "> 
+                        {sectorDropDown.map((link,index)=>
+                            <Link onClick={()=>{setArchitectureDropdown(false)
+                              setClicked(false)
+                            }} key={index} className="p-3 hover:text-blue-600 text-black flex gap-4" to={`/sectors/${link.label.toLowerCase().replace(/\s/g, "")}`}>
+                            {link.icon}
+                            {link.label}
+                            </Link>
+
+                        )}
+                      </div>
+                    }
+                  </div>
+                  :
+                <Link className="p-3 " to={`/sectors/${link.label.toLowerCase().replace(/\s/g, "")}`}>
                  {link.label}
                 </Link>
+                }
             </DropdownItem>
             )}
-            </DropdownMenu>
+            </DropdownMenu>}
           </Dropdown>:
           
             <NavbarItem className={`hover:scale-110 transiton duration-200 ${isLinkActive(i) ?activeLinkStyle:" text-gray-600"} `}  key={i}>

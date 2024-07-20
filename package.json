@@ -21,13 +21,16 @@
     "framer-motion": "^11.2.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-fast-marquee": "^1.6.5",
     "react-hook-form": "^7.52.1",
     "react-hot-toast": "^2.4.1",
+    "react-infinite-logo-slider": "^1.0.13",
     "react-router-dom": "^6.24.1",
     "react-slick": "^0.30.2",
     "sanity": "^3.49.0",
     "slick-carousel": "^1.8.1",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

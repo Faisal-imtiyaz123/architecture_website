@@ -98,7 +98,7 @@ export default function Careers() {
 
   }
   return (
-    <div className="p-16 mt-20 flex gap-8">
+    <div className="p-16 mt-20 max-h-[80vh] lg:max-h-[90vh]  flex gap-8">
       <p className="basis-[50%] pr-16 border-r ">
       In the heart of a bustling metropolis, nestled amidst towering skyscrapers and the ceaseless hum of urban life, lay a hidden haven known as Elmwood Park. Unlike the concrete jungle that surrounded it, Elmwood was a sanctuary of emerald green, a tapestry of winding paths and ancient oaks that whispered secrets on the breeze. Here, time seemed to slow its relentless pace, replaced by the gentle rustle of leaves and the melodic chirping of unseen birds.
 
@@ -126,7 +126,7 @@ export default function Careers() {
         </Button>
         </label>}
        </div>
-       <Button className="bg-gradient-to-tr text-xl p-8 from-pink-500 to-yellow-500 text-white shadow-lg " color="danger" radius="lg" type="submit">
+       <Button className="bg-gradient-to-tr text-xl p-8 blue-gradient text-white shadow-lg " color="danger" radius="lg" type="submit">
         Submit
        </Button>
       </form>

@@ -2,9 +2,16 @@ import { useQuery } from "@tanstack/react-query"
 import { sanityClient } from "../utils/client"
 import { urlForImage } from "../utils/image"
 import Carousel from "../components/Carousel"
-import { Button, Spinner} from "@nextui-org/react"
-import { Link } from "react-router-dom"
+import {Spinner} from "@nextui-org/react"
 import { Suspense } from "react"
+import LoadingSpinner from "../components/LoadingSpinner"
+import dmc from "../../public/Darbhanga Medical College.jpg"
+import gh from "../../public/Guyana, Hospital.jpg"
+import iitg from "../../public/IIT, Guwhati.jpg"
+import rch from "../../public/Ranchi High Court.gif"
+import sec from "../../public/Secretariat, Puducherry.jpg"
+import vsg from "../../public/Vidhan Sabha, Gandhinagar.jpg"
+
 
 export default function Home() {
   const homeImageQuery = useQuery({
@@ -19,50 +26,30 @@ export default function Home() {
         return res
       }
   })
-  if(homeImageQuery.isLoading) return (
-    <div className="w-[100vw] flex items-center justify-center h-[100vh]">
-     <Spinner size="lg" color="danger"/>
-    </div>
-  )
+
+  if(homeImageQuery.isLoading ) return <LoadingSpinner/>
+  const imageUrls = [dmc,gh,iitg,rch,sec,vsg]
+ 
+  
   return (
     homeImageQuery.isSuccess &&
     <div className="">
-      <Suspense fallback={<Spinner/>}>
+      <Suspense fallback={<Spinner color="primary"/>}>
      <img className="w-[100vw]" src={urlForImage(homeImageQuery.data[0].image)}/>
       </Suspense>
      <div className="lg:p-16 sm:p-8 md:p-12">
      <div className="">
       <Carousel/>
      </div>
-     <div className="flex mt-16 ">
-      <div className=" flex items-center text-white text-[7rem] bg-gradient-to-tr from-pink-600 to-yellow-400 sm:text-[5rem] md:text-[6rem] basis-[50%] border-r flex-col font-bold">
-      <span className="">
-        WHO
-        </span>
-        <span>
-          ARE
-        </span>
-         <span>
-          WE?
-        </span> 
-      </div>
-      <p className="flex  items-center justify-center basis-[50%] w-full">
-      blah blah blah blah blah 
-      </p>
-     </div>
-      <div className="mt-8 sm:gap-[3rem] flex md:gap-[5rem]" >
-      <img className="h-[45vw] w-[45vw]" src="../../public/c.jpg" alt="" />
-      <div className="flex flex-col md:gap-2 lg:gap-4 sm:gap-4 sm:mt-[4rem] md:mt-[5rem] lg:mt-[8rem] shrink-0"> 
-       <p className="text-gray-500 text-[3rem] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] ">Want to work? </p>  
-          <Link to="/careers">
-        <div className="flex justify-center">
-        <Button radius="full" className="bg-gradient-to-tr sm:px-8 sm:p-6  md:px-16 md:p-8 s sm:text-lg text-2xl from-pink-500 to-yellow-300 text-white shadow-lg">
-         Apply here
-        </Button>
+       <div className="grid grid-cols-2 gap-8 mt-32">
+        {imageUrls.map((imageUrl, index) => 
+        <div className="relative w-full h-[25rem] border group" key={index}>
+          <img className="w-full h-full object-cover" src={imageUrl} />
+          <div className="absolute flex justify-center items-center inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100  transition-opacity duration-200 ">
+          </div>
         </div>
-          </Link>
-        </div>
-      </div>
+        )}
+    </div>
      </div>
     </div>
   )

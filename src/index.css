@@ -11,15 +11,61 @@
     100% { border-color: #007bff; } /* Back to Blue */
   }
   @keyframes circlingBorderForm {
-    0% { border-color: #ec4899; }  
-    100% { border-color: #eab308 ; }
+    0% { border-color: #1e3a8a; }  
+    100% { border-color: #60A5FA ; }
   }
-  
+  @keyframes movingLight {
+    0% {
+      box-shadow: 15px 0 0 0 #007CF0;
+    }
+    25% {
+      box-shadow: 0 15px 0 0 #007CF0;
+    }
+    50% {
+      box-shadow: -15px 0 0 0 #007CF0;
+    }
+    75% {
+      box-shadow: 0 -15px 0 0 #007CF0;
+    }
+    100% {
+      box-shadow: 15px 0 0 0 #007CF0;
+    }
+  }
 
+  
+  .light-beam-border {
+    animation: movingLight 2s infinite linear;
+    border: 4px solid transparent; /* Adjust border size as needed */
+    border-radius: 8px; /* For rounded corners */
+    background: white;
+    position: relative;
+    border-image-slice: 1;
+  }
   .navbarCirclingBorder {
     animation: circlingBorder 10s infinite linear;
   }
 
 .formBorder{
     animation: circlingBorderForm 10s infinite linear;
+}
+.blue-gradient {
+  background: linear-gradient(45deg, #1E3A8A, #2563EB, #3B82F6, #60A5FA);
+  /* Optional: Add additional properties for smoother text rendering and alignment */
+  color: #ffffff;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Example usage of the class */
+.blue-gradient-text {
+  background: linear-gradient(45deg, #1E3A8A, #60A5FA);
+  -webkit-background-clip: text;
+  background-clip: true;
+  -webkit-text-fill-color: transparent;
+}
+
+.blue-gradient-border {
+  border: 1px solid ;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(45deg, #1E3A8A, #60A5FA);
 }
