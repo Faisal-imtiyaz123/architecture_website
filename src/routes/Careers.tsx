@@ -7,7 +7,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from "zod"
 import { sanityClient } from "../utils/client";
 import toast from "react-hot-toast";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../components/LoadingSpinner";
 export default function Careers() {
   const formSchema = z.object({
     fullName: z.string().min(1, { message: "Full Name is required" }).max(100, { message: "Full Name must be less than 100 characters" }),
@@ -15,9 +16,26 @@ export default function Careers() {
     phoneNumber: z.string().min(10, { message: "Phone Number must be at least 10 digits" }).max(15, { message: "Phone Number must be less than 15 digits" }),
   });
   const {register,handleSubmit,formState:{errors}} = useForm({
-    resolver: zodResolver(formSchema)
+    resolver: zodResolver(formSchema),
+    defaultValues:{
+      fullName:'',
+      email:'',
+      phoneNumber:''
+    }
   })
   const [selectedFile, setSelectedFile] = useState<File|null>(null);
+  const careersQuery = useQuery({
+    queryKey:['careers'],
+    queryFn:async()=>{
+      const res = await sanityClient.fetch(`
+      *[_type == "careers"]{
+        description,
+        bulletPoints
+      }
+      `)
+      return res
+    }
+  })
   const uploadMutation = useMutation({
     onMutate:()=>toast.loading('Uploading data...'),
     onError:()=>{
@@ -97,16 +115,28 @@ export default function Careers() {
     uploadMutation.mutate(values)
 
   }
+  if(careersQuery.isLoading) return <LoadingSpinner/>
   return (
-    <div className="p-16 mt-20 max-h-[80vh] lg:max-h-[90vh]  flex gap-8">
-      <p className="basis-[50%] pr-16 border-r ">
-      In the heart of a bustling metropolis, nestled amidst towering skyscrapers and the ceaseless hum of urban life, lay a hidden haven known as Elmwood Park. Unlike the concrete jungle that surrounded it, Elmwood was a sanctuary of emerald green, a tapestry of winding paths and ancient oaks that whispered secrets on the breeze. Here, time seemed to slow its relentless pace, replaced by the gentle rustle of leaves and the melodic chirping of unseen birds.
+    <div className="p-16 mt-20 max-h-[80vh] lg:max-h-[90vh] flex gap-8">
+      <div className="basis-[50%] flex flex-col gap-8  pr-16 border-r ">
+        <div>
+          {careersQuery?.data?.[0]?.description}
+        </div>
+        <div className="">
+        {careersQuery?.data?.[0]?.bulletPoints?.split(".").map((bulletPoint:string,i:number)=>
+          <div key={i} className="flex items-center gap-4">
+            <div className="rounded-full w-2 h-2 blue-gradient"></div>
+            {bulletPoint}
+          </div>
+        )
 
-      One crisp autumn morning, the park was bathed in a golden glow. Sunlight filtered through the canopy, dappling the ground with a mosaic of light and shadow. A young woman named Amelia, with auburn hair cascading down her shoulders and eyes the color of the summer sky, strolled along a secluded path. Lost in a book, she barely noticed the world around her, her brow furrowed in concentration.
-      </p>
+        }
+        </div>
+      
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col formBorder gap-8 p-6 border rounded-xl w-[30rem]  ">
         {formFields.map((field,i)=>
-           <Input errorMessage={errors[field.tag]?.message as string} isInvalid={errors[field.tag]?true:false}  isRequired {...register(field.tag)} key={i} type={field.type} label={field.label} />
+           <Input errorMessage={errors[field.tag as keyof z.infer<typeof formSchema>]?.message as string} isInvalid={errors[field.tag as keyof z.infer<typeof formSchema>]?true:false}  isRequired {...register(field.tag as keyof z.infer<typeof formSchema>)} key={i} type={field.type} label={field.label} />
         )
         }
        <div>

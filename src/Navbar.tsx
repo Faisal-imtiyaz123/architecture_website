@@ -1,13 +1,12 @@
 "use client"
-import { useEffect, useRef, useState } from "react";
+import {useRef, useState } from "react";
 import {  Navbar as NavbarNextUI,  NavbarContent,   NavbarItem,NavbarBrand,    NavbarMenu,  NavbarMenuItem} from "@nextui-org/navbar";
 import {Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/react"
 import {Link, useNavigate} from "react-router-dom";
 import { Plane, Building, Gavel, Briefcase, Train, HeartPulse, Instagram, Linkedin, Mail, Home, Palette } from 'lucide-react';
 
+
 export default function Navbar() {
-const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-const [clicked,setClicked] = useState<boolean>(true)
 const navigate = useNavigate()
 const [activeLink,setActiveLink]  = useState<number>(0)
 const [showArchitectureDropdown,setArchitectureDropdown] = useState<boolean>(false)
@@ -56,12 +55,11 @@ const sectorDropDown = [
 const iconClassName = "hover:scale-110 cursor-pointer transition duration-200"
 const isLinkActive=(i:number)=> activeLink-1===i
 const activeLinkStyle = "bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-2xl p-2"
-console.log(clicked)
 
 
   return (
   <div className="fixed top-2 items-center justify-center flex w-[100vw] z-[100] ">
-    <NavbarNextUI className="flex border gap-8 shadow-lg  rounded-3xl max-w-[59vw]"  onMenuOpenChange={setIsMenuOpen} >
+    <NavbarNextUI className="flex border gap-8 shadow-lg  rounded-3xl max-w-[59vw]"  >
     <NavbarContent  justify="center">
         <NavbarBrand>
           <p onClick={()=>{setActiveLink(0)
@@ -75,7 +73,7 @@ console.log(clicked)
             navLink.dropdown?
         <Dropdown>
           <NavbarItem  key={i}>
-            <DropdownTrigger  onClick={()=>{setClicked(true) }}>
+            <DropdownTrigger >
               <Button
                 disableRipple
                 className={`hover:scale-110 text-sm  bg-transparent data-[hover=true]:bg-transparent `}
@@ -99,7 +97,6 @@ console.log(clicked)
                       <div className="absolute top-[3.8rem] px-2 p-1 rounded-xl flex flex-col bg-white "> 
                         {sectorDropDown.map((link,index)=>
                             <Link onClick={()=>{setArchitectureDropdown(false)
-                              setClicked(false)
                             }} key={index} className="p-3 hover:text-blue-600 text-black flex gap-4" to={`/sectors/${link.label.toLowerCase().replace(/\s/g, "")}`}>
                             {link.icon}
                             {link.label}
@@ -120,15 +117,23 @@ console.log(clicked)
           </Dropdown>:
           
             <NavbarItem className={`hover:scale-110 transiton duration-200 ${isLinkActive(i) ?activeLinkStyle:" text-gray-600"} `}  key={i}>
-             <Link onClick={()=>setActiveLink(i+1)}  className="p-6  text-sm" to={navLink.url}>{navLink.name}</Link>
+             <Link  onClick={()=>setActiveLink(i+1)}  className="p-6  text-sm" to={navLink.url}>{navLink.name}</Link>
             </NavbarItem>
                 )
             }
             )
         }
-          <Instagram className={iconClassName}/>
-          <Linkedin className={iconClassName} fill="black"/>
-          <Mail className={iconClassName}/>
+         <Link target="_blank" to={"https://www.instagram.com/enarch.consultants/"}>
+          <Instagram  className={iconClassName}/>
+         </Link>
+         <Link target="_blank" to={"https://www.linkedin.com/company/enarch-consultant-private-limited/?originalSubdomain=in"}>
+         <Linkedin  className={iconClassName} fill="black"/>
+         </Link>
+         <Link target="_blank" to={"mailto:enarchindia@rediffmail.com"} >
+         <Mail className={iconClassName}/>
+         </Link>
+         
+         
         </NavbarContent>
        
         <NavbarMenu>
@@ -176,6 +181,7 @@ console.log(clicked)
     
   )
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ChevronDown = ({fill, size, height, width, ...props}:any) => {
     return (
       <svg

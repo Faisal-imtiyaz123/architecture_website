@@ -8,5 +8,6 @@ import aboutUs from "./AboutUs";
 import aboutUsCarousel from "./AboutUsCarousel";
 import publication from "./PubicationImages";
 import IndividualProject from "./IndividualProject";
+import careers from "./Careers";
 
-export const schemaTypes = [carouselImg,homeImg,application,projectImages,ProjectHomeImages,aboutUs,aboutUsCarousel,publication,IndividualProject]
+export const schemaTypes = [carouselImg,homeImg,application,projectImages,ProjectHomeImages,aboutUs,aboutUsCarousel,publication,IndividualProject,careers]

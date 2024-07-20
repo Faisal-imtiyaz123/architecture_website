@@ -13,7 +13,7 @@ const ProjectHomeImages = defineType({
           list: [
             {title: 'Interiors', value: 'interiors'},
             {title: 'Airports', value: 'airports'},
-            {title: 'Health Care', value: 'healthcare'},
+            {title: 'Health Care', value: 'h'},
             {title: 'Institutional', value: 'institutes'},
             {title: 'Judiciary' , value: 'judiciary'},
             {title: 'Work Spaces', value: 'workspaces'},

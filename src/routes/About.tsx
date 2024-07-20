@@ -66,7 +66,7 @@ export default function About() {
   return (
     <div className="h-screen w-screen">
       <img
-        src={urlForImage(aboutUsMainImagQuery.data[0].image)}
+        src={urlForImage(aboutUsMainImagQuery?.data?.[0].image)}
         alt="about us main image"
         className="w-[100vw]"
       />
@@ -94,7 +94,7 @@ export default function About() {
             </span>
           </div>
           <div className="grid grid-cols-2 gap-16">
-            {foundMembersImgQuery.data.map((image: any, index: number) => (
+            {foundMembersImgQuery?.data?.map((image: any, index: number) => (
               <img
                 key={index}
                 src={urlForImage(image.image)}
@@ -112,7 +112,7 @@ export default function About() {
             </span>
           </div>
           <Slider {...settings}>
-            {teamCarouselImagesQuery.data[0].images.map(
+            {teamCarouselImagesQuery?.data?.[0].images.map(
               (image: any, index: number) => (
                 <div
                   onMouseEnter={() => setHovered(true)}

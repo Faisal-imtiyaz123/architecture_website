@@ -33,7 +33,7 @@ const Carousel = () => {
   return (
     <div>
       <Slider {...settings}>
-        { carouselImages.isSuccess &&  carouselImages.data.map((obj:any, index:number) => (
+        { carouselImages.isSuccess &&  carouselImages.data?.map((obj:any, index:number) => (
           <div  onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)} key={index}>
             <img src={urlForImage(obj.image)} alt={`Slide ${index}`} />
