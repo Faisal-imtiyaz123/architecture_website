@@ -94,7 +94,7 @@ const activeLinkStyle = "bg-gradient-to-r from-blue-600 to-blue-400 text-white r
                     {link.label}
                     {icons.chevron}
                     {showArchitectureDropdown && 
-                      <div className="absolute top-[3.8rem] px-2 p-1 rounded-xl flex flex-col bg-white "> 
+                      <div className="absolute top-[3.8rem] z-[1000] shadow-lg px-2 p-1 rounded-xl flex flex-col bg-white "> 
                         {sectorDropDown.map((link,index)=>
                             <Link onClick={()=>{setArchitectureDropdown(false)
                             }} key={index} className="p-3 hover:text-blue-600 text-black flex gap-4" to={`/sectors/${link.label.toLowerCase().replace(/\s/g, "")}`}>

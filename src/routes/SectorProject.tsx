@@ -7,14 +7,14 @@ import LoadingSpinner from "../components/LoadingSpinner"
 
 export default function SectorProject() {
   const params= useParams()
-
-  const projectHomeImagesQuery =useQuery({
-      queryKey: ['projectHomeImage', params.sector],
+  console.log(params?.sector)
+  const projectImagesQuery =useQuery({
+      queryKey: ['projectImages', params.sector],
       enabled:!!params.sector,
       queryFn: async () => {
           const res = await sanityClient.fetch(`
-            *[_type == "projectHomeImages" && sector == $sector]{
-                image,
+            *[_type == "projectImages" && sector == $sector]{
+                images,
                 }
                 `, {sector: params?.sector})
                 return res
@@ -34,10 +34,11 @@ export default function SectorProject() {
                 }
         
   })
- if(projectHomeImagesQuery.isLoading || individulaProjectImagesQuery.isLoading || !params || !projectHomeImagesQuery.data || !individulaProjectImagesQuery.data) return <LoadingSpinner/>
+  console.log(projectImagesQuery.data)
+ if(projectImagesQuery.isLoading || individulaProjectImagesQuery.isLoading || !params || !projectImagesQuery.data || !individulaProjectImagesQuery.data) return <LoadingSpinner/>
   return (
     <div className="h-screen w-screen">
-    <img className="w-screen" src={urlForImage(projectHomeImagesQuery?.data?.[0].image)} />
+    <img className="w-screen" src={urlForImage(projectImagesQuery?.data?.[0].images[Number(params?.id-1)])} />
     <div className="px-16 mt-4 tracking-wider text-sm text-gray-600">
       {individulaProjectImagesQuery?.data?.[0].mainDescription}
     </div>

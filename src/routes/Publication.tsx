@@ -38,7 +38,7 @@ export default function Publication() {
         {publicationImagesQuery?.data?.[0].image?.map((projectImage:any, index: number) => 
         <div className="relative w-full h-[25rem] border group" key={index}>
           <img className="w-full h-full object-cover" src={urlForImage(projectImage)} />
-          <div className="absolute flex justify-center items-center inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-100  transition-opacity duration-200 ">
+          <div className="absolute flex justify-center items-center px-6 inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-100  transition-opacity duration-200 ">
            {publicationImagesQuery?.data?.[0].description &&
             <span className="text-white">
              {publicationImagesQuery?.data?.[0].description }
