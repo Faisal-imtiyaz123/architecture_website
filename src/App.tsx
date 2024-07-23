@@ -17,6 +17,7 @@ import {
 } from '@tanstack/react-query'
 import Sector from "./routes/Sector";
 import SectorProject from "./routes/SectorProject";
+import NotFound from "./routes/NotFound";
 export default function App() {
   const queryclient = new QueryClient();
   return (
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="/careers" element={<Careers />} />
         <Route path="/publication" element={<Publication />} />
         </Route>
+        <Route path="*" element={<NotFound/>}/>
       </Routes>
     </Router>
   </QueryClientProvider>

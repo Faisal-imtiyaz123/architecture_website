@@ -1,13 +1,15 @@
 
 import { useQuery } from "@tanstack/react-query"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { sanityClient } from "../utils/client"
 import { urlForImage } from "../utils/image"
 import LoadingSpinner from "../components/LoadingSpinner"
+import { useEffect } from "react"
+
 
 export default function SectorProject() {
   const params= useParams()
-  console.log(params?.sector)
+  const navigate = useNavigate()
   const projectImagesQuery =useQuery({
       queryKey: ['projectImages', params.sector],
       enabled:!!params.sector,
@@ -34,11 +36,17 @@ export default function SectorProject() {
                 }
         
   })
-  console.log(projectImagesQuery.data)
- if(projectImagesQuery.isLoading || individulaProjectImagesQuery.isLoading || !params || !projectImagesQuery.data || !individulaProjectImagesQuery.data) return <LoadingSpinner/>
+
+
+ useEffect(()=>{
+  if(!individulaProjectImagesQuery.data || Number(params?.id) >projectImagesQuery.data?.[0]?.images.length){
+    navigate('/*')
+  }
+ },[individulaProjectImagesQuery.data,projectImagesQuery.data,navigate,params?.id])
+ if(projectImagesQuery.isLoading || individulaProjectImagesQuery.isLoading || !params || !projectImagesQuery.isSuccess || !individulaProjectImagesQuery.isSuccess) return <LoadingSpinner/>
   return (
     <div className="h-screen w-screen">
-    <img className="w-screen" src={urlForImage(projectImagesQuery?.data?.[0].images[Number(params?.id-1)])} />
+    <img className="w-screen" src={urlForImage(projectImagesQuery?.data?.[0].images[Number(params?.id)-1])} />
     <div className="px-16 mt-4 tracking-wider text-sm text-gray-600">
       {individulaProjectImagesQuery?.data?.[0].mainDescription}
     </div>
