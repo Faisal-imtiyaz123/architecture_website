@@ -13,9 +13,9 @@ export default function Index() {
    }
   },[params?.sector,navigate])
   return (
-    <div>
+    <div className="">
         <Navbar/>
-    <div className="h-screen w-screen">
+    <div className="h-[100vh] w-[100vw] overflow-x-hidden">
         <Outlet/>
     </div>
     </div>
