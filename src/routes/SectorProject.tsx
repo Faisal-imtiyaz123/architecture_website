@@ -39,26 +39,30 @@ export default function SectorProject() {
 
 
  useEffect(()=>{
-  if(!individulaProjectImagesQuery.data || Number(params?.id) >projectImagesQuery.data?.[0]?.images.length){
+  if(individulaProjectImagesQuery.isError || Number(params?.id) >projectImagesQuery.data?.[0]?.images.length){
     navigate('/*')
   }
- },[individulaProjectImagesQuery.data,projectImagesQuery.data,navigate,params?.id])
+ },[individulaProjectImagesQuery.isError,projectImagesQuery.data,navigate,params?.id])
  if(projectImagesQuery.isLoading || individulaProjectImagesQuery.isLoading || !params || !projectImagesQuery.isSuccess || !individulaProjectImagesQuery.isSuccess) return <LoadingSpinner/>
   return (
-    <div className="h-screen w-screen">
-    <img className="w-screen" src={urlForImage(projectImagesQuery?.data?.[0].images[Number(params?.id)-1])} />
+    <div>
+    <img className="py-2 max-h-[88vh] w-full" src={urlForImage(projectImagesQuery?.data?.[0].images[Number(params?.id)-1])} />
     <div className="px-16 mt-4 tracking-wider text-sm text-gray-600">
       {individulaProjectImagesQuery?.data?.[0].mainDescription}
     </div>
-    <div className="grid lg:p-16 sm:p-8 md:p-12 grid-cols-2 gap-8">
+    <div className="grid py-16 grid-cols-2 gap-8">
       {individulaProjectImagesQuery?.data?.[0].images.map((projectImage:any, index: number) => {
         return (
-        <div className="relative w-full h-[25rem] border group" key={index}>
-           <img className="w-full h-full object-cover" src={urlForImage(projectImage.image)} />
-           <div className="tracking-wider text-sm text-gray-600 mt-2" >
-                    {projectImage.description}
-           </div>
-         </div>
+          <div className="relative w-full max-h-[25rem] border group" key={index}>
+          <img className="w-full h-full object-cover" src={urlForImage(projectImage.image)} />
+          <div className="absolute flex justify-center items-center px-6 inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-100  transition-opacity duration-200 ">
+           {projectImage.description &&
+            <span className="text-white">
+             {projectImage.description }
+            </span>
+            }
+          </div>
+        </div>
         )
       }
 

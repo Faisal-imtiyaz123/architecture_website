@@ -1,6 +1,8 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../Navbar";
 import { useEffect } from "react";
+import Footer from "../components/Footer";
+import AppErrorBoundary from "../components/ErrorBoundary";
 
 
 export default function Index() {
@@ -13,11 +15,16 @@ export default function Index() {
    }
   },[params?.sector,navigate])
   return (
-    <div className="">
-        <Navbar/>
-    <div className="h-[100vh] w-[100vw] overflow-x-hidden">
-        <Outlet/>
+    <>
+    <AppErrorBoundary>
+    <Navbar/>
+    <div className="lg:px-12 overflow-x-hidden sm:px-6 md:px-10">
+    <Outlet/>
+    <Footer/>
     </div>
-    </div>
+    </AppErrorBoundary>
+    
+    </>
+    
   )
 }

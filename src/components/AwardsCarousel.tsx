@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { sanityClient } from '../utils/client';
 import { urlForImage } from '../utils/image';
 import { useState } from 'react';
+import LoadingSpinner from './LoadingSpinner';
 
 export const settings = {
  dots: true,
@@ -22,27 +23,32 @@ const AwardsCarousel = () => {
     queryKey: ['carouselImages'],
     queryFn: async () => {
       const res = await sanityClient.fetch(`
-      *[_type == "carouselImage"]{
-        image
+      *[_type == "aboutUsCarouselImages" && type == "awards"]{
+        images
         }
         `)
         return res
       }
   })
  const [hovered,setHovered] = useState<boolean>(false)
-  return (
-    <div>
+  if(carouselImages.isLoading) return <LoadingSpinner/>
+  return carouselImages.isSuccess && <div>
       <Slider {...settings}>
-        { carouselImages.isSuccess &&  carouselImages?.data?.map((obj:any, index:number) => (
+        { carouselImages.isSuccess &&  carouselImages?.data?.[0]?.images?.map((imageObj:any, index:number) => (
           <div  onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)} key={index}>
-            <img src={urlForImage(obj.image)} alt={`Slide ${index}`} />
-            <div   className={`absolute flex flex-col gap-8 justify-center inset-0 bg-black transition-opacity duration-1000 ${hovered ? 'opacity-10' : 'opacity-0'}`}></div>
+            <div className='relative'>
+            <img className='max-h-[85vh] w-full' src={urlForImage(imageObj.image)} alt={`Slide ${index}`} />
+            <div  className={`p-2 absolute text-white flex items-center gap-8 justify-center inset-0 bg-black transition-opacity duration-1000 ${hovered ? 'opacity-80' : 'opacity-0'}`}>
+              {imageObj.description}
+            </div>
+            </div>
+          
           </div>
         ))}
       </Slider>
     </div>
-  );
+  
 };
 
 export default AwardsCarousel;

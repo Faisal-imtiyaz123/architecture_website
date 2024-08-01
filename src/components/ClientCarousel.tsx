@@ -29,11 +29,11 @@ const ClientCarousel = () => {
     }
     return(
         <Marquee className={computeLogosGap()}>
-            {clientLogosQuery.data?.[0]?.images.map((image:any, index:number) => (
+            {clientLogosQuery.data?.[0]?.images?.map((imageObj:any, index:number) => (
             <div className="px-16">
                 <img
                   key={index}
-                  src={urlForImage(image)}
+                  src={urlForImage(imageObj.image)}
                   alt="client logo"
                   className="h-[20rem]"
                 />

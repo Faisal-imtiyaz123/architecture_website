@@ -5,7 +5,6 @@ import Architecture from "./routes/Architecture";
 import Interiors from "./routes/Interiors";
 import Sectors from "./routes/Sectors";
 import About from "./routes/About";
-import Careers from "./routes/Careers";
 import Publication from "./routes/Publication";
 import Index from "./routes/Index";
 import  { Toaster } from 'react-hot-toast';
@@ -18,6 +17,7 @@ import {
 import Sector from "./routes/Sector";
 import SectorProject from "./routes/SectorProject";
 import NotFound from "./routes/NotFound";
+import Jobs from "./routes/Jobs";
 export default function App() {
   const queryclient = new QueryClient();
   return (
@@ -34,7 +34,7 @@ export default function App() {
         </Route>
         <Route path="/sectors/:sector/:id" element={<SectorProject />} />
         <Route path="/about" element={<About />} />
-        <Route path="/careers" element={<Careers />} />
+        <Route path="/careers" element={<Jobs />} />
         <Route path="/publication" element={<Publication />} />
         </Route>
         <Route path="*" element={<NotFound/>}/>

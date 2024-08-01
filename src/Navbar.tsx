@@ -1,10 +1,10 @@
 "use client"
-import {useRef, useState } from "react";
-import {  Navbar as NavbarNextUI,  NavbarContent,   NavbarItem,NavbarBrand,    NavbarMenu,  NavbarMenuItem} from "@nextui-org/navbar";
+import {useEffect, useRef, useState } from "react";
+import {  Navbar as NavbarNextUI,  NavbarContent,   NavbarItem,   NavbarMenu,  NavbarMenuItem} from "@nextui-org/navbar";
 import {Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/react"
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import { Plane, Building, Gavel, Briefcase, Train, HeartPulse, Instagram, Linkedin, Mail, Home, Palette } from 'lucide-react';
-
+import EnarchNavbarLogo from "./assets/Enarch-Navbar-logo.png"
 
 export default function Navbar() {
 const navigate = useNavigate()
@@ -15,7 +15,7 @@ const ref = useRef<HTMLDivElement| null>(null)
 const icons = {
     chevron: <ChevronDown fill="currentColor" size={16} />
   };
-
+const location = useLocation()
  const navLinks =[
     {
      name:'Projects',
@@ -56,17 +56,19 @@ const iconClassName = "hover:scale-110 cursor-pointer transition duration-200"
 const isLinkActive=(i:number)=> activeLink-1===i
 const activeLinkStyle = "bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-2xl p-2"
 
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, [location]);
 
   return (
-  <div className="fixed top-2 items-center justify-center flex w-[100vw] z-[100] ">
-    <NavbarNextUI className="flex border gap-8 shadow-lg  rounded-3xl max-w-[59vw]"  >
-    <NavbarContent  justify="center">
-        <NavbarBrand>
-          <p onClick={()=>{setActiveLink(0)
-            navigate('/')}} className="text-3xl hover:scale-110 bg-gradient-to-r bg-clip-text text-transparent transition duration-200 cursor-pointer font-bold from-blue-600 to-blue-400 tracking-widest ">ENARCH</p>
-        </NavbarBrand>
-    </NavbarContent>
-        <NavbarContent className="flex">
+ 
+    <NavbarNextUI shouldHideOnScroll isBordered  className="flex justify-start" >
+        <div className="ml-10 mr-8 flex">
+          <img onClick={()=>navigate('/')} className="h-[4rem] cursor-pointer" src={EnarchNavbarLogo} alt="" />
+          {/* <p onClick={()=>{setActiveLink(0)
+            navigate('/')}} className="text-3xl hover:scale-110 bg-gradient-to-r bg-clip-text text-transparent transition duration-200 cursor-pointer font-bold from-blue-600 to-blue-400 tracking-widest ">ENARCH</p> */}
+        </div>
+        <NavbarContent  className="flex">
         {
             navLinks.map((navLink,i)=> {
             return(
@@ -123,7 +125,11 @@ const activeLinkStyle = "bg-gradient-to-r from-blue-600 to-blue-400 text-white r
             }
             )
         }
-         <Link target="_blank" to={"https://www.instagram.com/enarch.consultants/"}>
+        
+          
+        </NavbarContent>
+        <div className="flex gap-8 fixed right-16" >
+        <Link target="_blank" to={"https://www.instagram.com/enarch.consultants/"}>
           <Instagram  className={iconClassName}/>
          </Link>
          <Link target="_blank" to={"https://www.linkedin.com/company/enarch-consultant-private-limited/?originalSubdomain=in"}>
@@ -132,10 +138,7 @@ const activeLinkStyle = "bg-gradient-to-r from-blue-600 to-blue-400 text-white r
          <Link target="_blank" to={"mailto:enarchindia@rediffmail.com"} >
          <Mail className={iconClassName}/>
          </Link>
-         
-         
-        </NavbarContent>
-       
+        </div>
         <NavbarMenu>
         {navLinks.map((navLink, index) =>  {
             return(
@@ -177,7 +180,7 @@ const activeLinkStyle = "bg-gradient-to-r from-blue-600 to-blue-400 text-white r
       </NavbarMenu>
        
      </NavbarNextUI>
-  </div>
+
     
   )
 }

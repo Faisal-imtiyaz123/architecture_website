@@ -11,7 +11,7 @@ import ClientCarousel from "../components/ClientCarousel";
 import AwardsCarousel from "../components/AwardsCarousel";
 
 export default function About() {
-  const [hovered, setHovered] = useState<boolean>(false);
+  const [, setHovered] = useState<boolean>(false);
   const aboutUsMainImagQuery = useQuery({
     queryKey: ["aboutUsMainImage"],
     queryFn: async () => {
@@ -64,11 +64,11 @@ export default function About() {
     return <LoadingSpinner />;
 
   return (
-    <div className="h-screen w-screen">
+    <div className="py-2">
       <img
         src={urlForImage(aboutUsMainImagQuery?.data?.[0].image)}
         alt="about us main image"
-        className="w-[100vw]"
+        className="h-[90vh] w-full"
       />
       <div className="p-16 mt-16 ">
         <div className="grid grid-cols-2 gap-8 self-center">
@@ -112,8 +112,8 @@ export default function About() {
             </span>
           </div>
           <Slider {...settings}>
-            {teamCarouselImagesQuery?.data?.[0].images.map(
-              (image: any, index: number) => (
+            {teamCarouselImagesQuery?.data?.[0]?.images?.map(
+              (imageObj: any, index: number) => (
                 <div
                   onMouseEnter={() => setHovered(true)}
                   onMouseLeave={() => setHovered(false)}
@@ -121,12 +121,10 @@ export default function About() {
                 >
                   <img
                     className="h-[45rem] w-full"
-                    src={urlForImage(image)}
+                    src={urlForImage(imageObj.image)}
                     alt={`Slide ${index}`}
                   />
-                  <div
-                    className={`absolute flex flex-col gap-8 justify-center inset-0 bg-black transition-opacity duration-1000 ${hovered ? "opacity-10" : "opacity-0"}`}
-                  ></div>
+                  
                 </div>
               )
             )}

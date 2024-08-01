@@ -21,7 +21,24 @@ const aboutUsCarousel = defineType({
         name: 'images',
         title: 'Images',
         type: 'array',
-        of: [{type: 'image', options: {hotspot: true}}],
+        of: [
+          {
+            type: 'object',
+            fields: [
+              defineField({
+                name: 'image',
+                title: 'Image',
+                type: 'image',
+                options: { hotspot: true }
+              }),
+              defineField({
+                name: 'description',
+                title: 'Description',
+                type: 'string'
+              })
+            ]
+          }
+        ]
       }),
     ],
   })

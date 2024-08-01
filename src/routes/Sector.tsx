@@ -38,12 +38,24 @@ export default function Sector() {
  if(projectHomeImagesQuery.isLoading || projectImagesQuery.isLoading || !params || !projectHomeImagesQuery.data || !projectImagesQuery.data ) return <LoadingSpinner/>
 
   return (
-    <div className="h-screen w-screen">
-    <img className="w-screen" src={urlForImage(projectHomeImagesQuery?.data?.[0]?.image)} />
-    <div className="grid lg:p-16 sm:p-8 md:p-12 grid-cols-2 gap-8">
+    <div>
+    <div className="py-2 "> 
+    <div className="relative">
+    <img
+          className="w-full h-full object-cover max-h-[88vh]"
+          src={urlForImage(projectHomeImagesQuery?.data?.[0]?.image)}
+        />
+         <div className="absolute tracking-wider inset-0 flex pl-[5rem] items-center bg-black bg-opacity-30 text-white text-5xl">
+         {(params?.sector?.[0].toUpperCase() ??'' )+ params?.sector?.slice(1) }
+        </div>
+    </div>
+    
+    </div>
+   
+    <div className="grid py-32 grid-cols-2 gap-8">
       {projectImagesQuery?.data?.[0]?.images.map((projectImage:any, index: number) => {
         return (
-        <div className="relative w-full h-[25rem] border group" key={index}>
+        <div className="relative w-full max-h-[25rem] border group" key={index}>
            <img className="w-full h-full object-cover" src={urlForImage(projectImage)} />
            <div className="absolute flex justify-center items-center inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100  transition-opacity duration-200 ">
              <Button onClick={()=>navigate(`${location.pathname}/${index+1}`)} radius="none" className="text-white" size="lg" variant="bordered">
