@@ -47,7 +47,7 @@ export default function Jobs() {
     </div>
     :
 <div className="mt-[-3rem]">
-<Careers requirements={jobsQuery?.data?.[jobIndex].requirements} description={jobsQuery?.data?.[jobIndex].description}/>
+<Careers setJobIndex={setJobIndex} requirements={jobsQuery?.data?.[jobIndex].requirements} description={jobsQuery?.data?.[jobIndex].description}/>
 </div>
   
 }

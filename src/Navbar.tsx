@@ -17,23 +17,24 @@ const icons = {
   };
 const location = useLocation()
  const navLinks =[
-    {
-     name:'Projects',
-     url:'/sectors',
-     dropdown:true
-    },
-    {
+  {
     name:'About Us',
      url:'/about'
     },
     {
-    name:'Careers',
-    url:'/careers'
+     name:'Sectors',
+     url:'/sectors',
+     dropdown:true
     },
     {
-    name:'Publication',
-    url:'/publication'
+      name:'Media',
+      url:'/publication'
+      },
+    {
+    name:'Careers',
+    url:'/careers'
     }
+    
 ]
 
  
@@ -65,8 +66,6 @@ useEffect(() => {
     <NavbarNextUI shouldHideOnScroll isBordered  className="flex justify-start" >
         <div className="ml-10 mr-8 flex">
           <img onClick={()=>navigate('/')} className="h-[4rem] cursor-pointer" src={EnarchNavbarLogo} alt="" />
-          {/* <p onClick={()=>{setActiveLink(0)
-            navigate('/')}} className="text-3xl hover:scale-110 bg-gradient-to-r bg-clip-text text-transparent transition duration-200 cursor-pointer font-bold from-blue-600 to-blue-400 tracking-widest ">ENARCH</p> */}
         </div>
         <NavbarContent  className="flex">
         {

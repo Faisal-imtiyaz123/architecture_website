@@ -1,17 +1,18 @@
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
-import { X } from "lucide-react";
-import { useState } from "react";
+import {  X } from "lucide-react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { sanityClient } from "../utils/client";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
-
+import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 interface Props {
   description: string;
   requirements: string[];
+  setJobIndex: Dispatch<SetStateAction<number | null>>;
 }
 
 export default function Careers(props: Props) {
@@ -126,8 +127,14 @@ export default function Careers(props: Props) {
     uploadMutation.mutate(values);
   };
   return (
-    <div className="p-16 mt-20 max-h-[80vh] lg:max-h-[90vh] flex gap-8">
-      <div className="basis-[50%] flex flex-col gap-8  pr-16 border-r ">
+    <div className="p-16  max-h-[80vh] lg:max-h-[90vh] flex flex-col gap-8">
+       <Breadcrumbs variant="solid">
+          <BreadcrumbItem onClick={()=>props.setJobIndex(null)}>Jobs</BreadcrumbItem>
+          <BreadcrumbItem color="primary">Apply</BreadcrumbItem>
+        </Breadcrumbs>
+
+  <div className="flex">
+   <div className="basis-[50%] flex flex-col gap-8  pr-16 border-r ">
         <div>{props.description}</div>
         <div className="">
           {props.requirements
@@ -201,6 +208,8 @@ export default function Careers(props: Props) {
           Submit
         </Button>
       </form>
+   </div>
+     
     </div>
   );
 }
